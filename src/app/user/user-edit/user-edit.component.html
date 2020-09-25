@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-md-2">
+    <a class="btn btn-outline-secondary mt-2" routerLink="/user-list/{{item.id}}/view">
+      <i class="fas fa-arrow-circle-left fa-2x"></i>
+    </a>
+  </div>
+  <div class="col-md-8 text-center">
+    <h4 class="display-4 text-capitalize">{{item.name}}</h4>
+  </div>
+  <!--
+  <div class="col-md-2 text-right">
+    <a class="btn btn-outline-primary mt-2" routerLink="/user-list/{{item.id}}/view">
+      <i class="fas fa-eye fa-2x"></i>
+    </a>
+  </div>
+  -->
+</div>
+
+<form *ngIf="itemFg" [formGroup]="itemFg" (ngSubmit)="save()">
+  <hr/>
+  <div class="row">
+    <div class="col">
+      <div class="form-group">
+        <label>User Id <code>*</code> </label>
+        <input type="text" placeholder="User Id" class="form-control"
+               formControlName="userId"/>
+        <small *ngFor="let em of itemFg.controls.userId['errorMessages']"
+               class="form-text text-danger">{{em}}<br/>
+        </small>
+      </div>
+    </div>
+  </div>
+</form>

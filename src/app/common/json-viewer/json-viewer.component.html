@@ -1,0 +1,15 @@
+<div xclass="border border-light">
+  <hr/>
+  <div class="row">
+    <div class="col-md-10">
+      <h5 class="text-muted">{{viewName}}</h5>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-outline-secondary btn-sm"
+              (click)="copyToClipBoard()">Copy To Clipboard</button>
+    </div>
+  </div>
+  <hr/>
+  <pre id="jsonViewerContent">{{content | json}}</pre>
+  <br/>
+</div>

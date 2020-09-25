@@ -1,0 +1,43 @@
+<div class="card" *ngIf="items">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-md-10">
+        <strong>Total : <span class="text-info">{{items.length}}</span></strong>
+      </div>
+      <div class="col-md-2 text-right">
+        <button type="button" class="btn btn-secondary btn-sm pull-right"
+                (click)="refresh()">
+          <i class="fas fa-sync"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <table class="table table-sm table-bordered table-hover">
+      <thead>
+      <tr>
+        <th scope="col" width="40">#</th>
+        <th scope="col">User Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Mobile</th>
+        <th scope="col">Status</th>
+        <th scope="col" width="40">&nbsp;</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of items; index as i;">
+        <td class="text-right">{{i+1}}</td>
+        <td>{{item.userId}}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.mobile}}</td>
+        <td>{{item.status}}</td>
+        <td class="text-center">
+          <button class="btn btn-link btn-sm" (click)="view(item)">
+            <i class="fas fa-eye"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

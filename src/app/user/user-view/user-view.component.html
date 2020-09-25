@@ -1,0 +1,80 @@
+<div class="row">
+  <div class="col-md-2">
+    <a class="btn btn-outline-secondary mt-2" routerLink="/user-list">
+      <i class="fas fa-arrow-circle-left fa-2x"></i>&nbsp;
+    </a>
+  </div>
+  <div class="col-md-8 text-center">
+    <h4 class="display-4 text-capitalize">{{item.name}}</h4>
+  </div>
+  <div class="col-md-2 text-right">
+    <a class="btn btn-outline-primary mt-2" routerLink="/user-list/{{item.id}}/edit">
+      <i class="fas fa-edit fa-2x"></i>
+    </a>
+  </div>
+</div>
+<hr/>
+<div class="row">
+  <div class="col">
+    <div>
+      <h4 class="display-5 text-capitalize text-warning">General Info</h4>
+    </div>
+    <div class="row mb-2">
+      <div class="col-md-4 mb-1">
+        <strong>User Id</strong>
+      </div>
+      <div class="col-md-8 mb-1">
+        <h4>{{item.userId}}</h4>
+      </div>
+      <div class="col-md-4 mb-1">
+        <strong>Mobile</strong>
+      </div>
+      <div class="col-md-8 mb-1">
+        <h4>{{item.mobile}}</h4>
+      </div>
+      <div class="col-md-4 mb-1">
+        <strong>Email</strong>
+      </div>
+      <div class="col-md-8 mb-1">
+        <h4>{{item.email}}</h4>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div>
+      <h4 class="display-5 text-capitalize text-warning">System Info</h4>
+    </div>
+    <div class="row mb-2">
+      <div class="col-md-4 mb-1">
+        <strong>Status</strong>
+      </div>
+      <div class="col-md-8 mb-1">
+        <h4 class="text-uppercase">{{item.status}}</h4>
+      </div>
+      <div class="col-md-4 mb-1">
+        <strong>Created By</strong>
+      </div>
+      <div class="col-md-8 mb-1">
+        <h4>{{item.createdBy}}</h4>
+      </div>
+      <div class="col-md-4 mb-1">
+        <strong>Created Time</strong>
+      </div>
+      <div class="col-md-8 mb-1">
+        <h4>{{item.createdTime}}</h4>
+      </div>
+      <div class="col-md-4 mb-1">
+        <strong>Update By</strong>
+      </div>
+      <div class="col-md-8 mb-1">
+        <h4>{{item.updatedBy}}</h4>
+      </div>
+      <div class="col-md-4 mb-1">
+        <strong>Update Time</strong>
+      </div>
+      <div class="col-md-8 mb-1">
+        <h4>{{item.updatedTime}}</h4>
+      </div>
+    </div>
+  </div>
+</div>

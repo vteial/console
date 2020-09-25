@@ -1,0 +1,19 @@
+#sidebar ul li.active > a {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+img.rounded-circle {
+  width: 90px;
+  height: 90px;
+}
+
+.profile-title {
+  margin-top: 5px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+#content-main {
+  min-height: 640px;
+}

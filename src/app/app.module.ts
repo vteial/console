@@ -18,8 +18,6 @@ import {AngularFirestoreModule} from "@angular/fire/firestore";
 
 import {environment} from "../environments/environment";
 import {AppRoutingModule} from './app-routing.module';
-import {DefaultApiMockServiceService} from "./@local/default-api-mock-service.service";
-import {ApiMockModule} from "@ng-stack/api-mock";
 import {AppComponent} from './app.component';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {JsonViewerComponent} from "./common/json-viewer/json-viewer.component";
@@ -33,8 +31,6 @@ import {SignOutComponent} from "./sign-out/sign-out.component";
 import {UserListComponent} from './user/user-list/user-list.component';
 import {UserEditComponent} from './user/user-edit/user-edit.component';
 import {UserViewComponent} from './user/user-view/user-view.component';
-
-const apiMockModule = ApiMockModule.forRoot(DefaultApiMockServiceService, {delay: environment.apiMockHttpDelay});
 
 @NgModule({
   declarations: [
@@ -57,7 +53,6 @@ const apiMockModule = ApiMockModule.forRoot(DefaultApiMockServiceService, {delay
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    // !environment.production && environment.apiMockRun ? apiMockModule : [],
     FormsModule,
     ReactiveFormsModule,
     RxReactiveFormsModule,

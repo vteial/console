@@ -6,8 +6,6 @@ export const environment = {
   production: false,
   mode: 'local',
   baseApiPrefix: '/api',
-  apiMockRun: true,
-  apiMockHttpDelay: 1000,
   firebaseConfig: {
     apiKey: "AIzaSyCsaVLIa1xSxNJHabO_hrjltq5l8SBdD2g",
     authDomain: "bigsalesdb.firebaseapp.com",

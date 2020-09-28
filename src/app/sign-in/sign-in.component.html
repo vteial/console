@@ -1,15 +1,47 @@
 <div class="row">
-  <div class="col-md-1">&nbsp;</div>
   <div class="col-md-4">
-    <br/><br/><br/><br/>
-    <br/><br/><br/><br/>
-    <br/><br/><br/><br/>
-    <div>
-      <button class="btn btn-primary" (click)="signIn()">
-        <i class="fas fa-sign-in-alt mr-2"></i>Sign In using Google Account&nbsp;&nbsp;
-      </button>
+    <br/><br/>
+    <div class="alert alert-danger" *ngIf="message">{{message}}</div>
+    <form (ngSubmit)="signIn()">
+      <div class="form-group">
+        <label for="userId"><strong>User Id</strong>&nbsp;&nbsp;<code>*</code></label>
+        <input class="form-control" placeholder="User Id"
+               type="email" id="userId" name="userId"
+               [(ngModel)]="item.userId">
+      </div>
+      <div class="form-group">
+        <label for="userPassword"><strong>Password</strong>&nbsp;&nbsp;<code>*</code></label>
+        <input class="form-control" placeholder="Password"
+               type="password" id="userPassword" name="password"
+               [(ngModel)]="item.password" >
+      </div>
+      <div class="text-right">
+        <button class="btn btn-primary" type="submit" value="Sign In">
+          <i class="fas fa-sign-in-alt mr-3"></i>Sign In
+        </button>
+      </div>
+    </form>
+    <div class="row mt-5">
+      <div class="col-md-1">&nbsp;</div>
+      <div class="col-md-10">
+        <button class="btn btn-outline-danger btn-block" (click)="signInWithGoogle()">
+          <i class="fab fa-google mr-3"></i>Sign In using Google
+        </button>
+        <br/>
+        <div class="text-center">
+          <button class="btn btn-outline-info btn-block" (click)="signInWithFacebook()">
+            <i class="fab fa-facebook mr-3"></i>Sign In using Facebook
+          </button>
+        </div>
+        <br/>
+        <button class="btn btn-outline-primary btn-block" (click)="signInWithTwitter()">
+          <i class="fab fa-twitter mr-3"></i>Sign In using Twitter
+        </button>
+      </div>
+      <div class="col-md-1">&nbsp;</div>
     </div>
   </div>
+  <div class="col-md-1">&nbsp;</div>
   <div class="col-md-7">
     <img src="assets/images/login.png" width="600" height="600" alt="logo">
   </div>

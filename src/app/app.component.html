@@ -12,10 +12,10 @@
       <h1><a href="index.html" class="logo">{{appTitle}}</a></h1>
       <div *ngIf="appSession != null" class="text-center">
         <a routerLink="/profile">
-          <img [src]="appSession.avatarUrl" class="rounded-circle" alt="avatar">
+          <img [src]="appSession.appUser.photoUrl" class="rounded-circle" alt="avatar">
         </a>
-        <h5 class="profile-title"><b>{{appSession.name}}</b></h5>
-        <h5 class="profile-title"><b>{{appSession.roleId}}</b></h5>
+        <h5 class="profile-title"><b>{{appSession.appUser.name}}</b></h5>
+        <h5 class="profile-title"><b>{{appSession.appUser.roleId}}</b></h5>
       </div>
       <ul class="list-unstyled components mb-5" *ngIf="appSession">
         <li routerLinkActive="active">

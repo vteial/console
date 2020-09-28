@@ -1,4 +1,6 @@
-<div class="row">
+<div>
+
+  <div class="row">
   <div class="col-md-2">
     <a class="btn btn-outline-secondary mt-2" routerLink="/user-list/{{item.id}}/view">
       <i class="fas fa-arrow-circle-left fa-2x"></i>
@@ -16,18 +18,71 @@
   -->
 </div>
 
-<form *ngIf="itemFg" [formGroup]="itemFg" (ngSubmit)="save()">
   <hr/>
   <div class="row">
     <div class="col">
-      <div class="form-group">
-        <label>User Id <code>*</code> </label>
-        <input type="text" placeholder="User Id" class="form-control"
-               formControlName="userId"/>
-        <small *ngFor="let em of itemFg.controls.userId['errorMessages']"
-               class="form-text text-danger">{{em}}<br/>
-        </small>
+      <form *ngIf="itemFg" [formGroup]="itemFg" (ngSubmit)="save()">
+        <div>
+          <h4 class="display-5 text-capitalize text-warning">General Info</h4>
+        </div>
+        <div class="form-group">
+          <label>Name <code>*</code></label>
+          <input type="text" placeholder="Name" class="form-control"
+                 formControlName="name"/>
+          <small *ngFor="let em of itemFg.controls.name['errorMessages']"
+                 class="form-text text-danger">{{em}}<br/>
+          </small>
+        </div>
+        <div class="form-group">
+          <label>User Id <code>*</code> </label>
+          <input type="text" placeholder="User Id" class="form-control"
+                 formControlName="userId" readonly/>
+          <small *ngFor="let em of itemFg.controls.userId['errorMessages']"
+                 class="form-text text-danger">{{em}}<br/>
+          </small>
+        </div>
+        <div class="form-group">
+          <label>Mobile <code>*</code></label>
+          <input type="text" placeholder="Mobile" class="form-control"
+                 formControlName="mobile"/>
+          <small *ngFor="let em of itemFg.controls.mobile['errorMessages']"
+                 class="form-text text-danger">{{em}}<br/>
+          </small>
+        </div>
+        <div class="form-group">
+          <label>Email <code>*</code></label>
+          <input type="text" placeholder="Email" class="form-control"
+                 formControlName="email" readonly/>
+          <small *ngFor="let em of itemFg.controls.email['errorMessages']"
+                 class="form-text text-danger">{{em}}<br/>
+          </small>
+        </div>
+        <div class="row">
+          <div class="col-md-8">&nbsp;</div>
+          <div class="col-md-4">
+            <button type="submit" class="btn btn-primary float-right">
+              <i class="fas fa-save"></i>&nbsp;&nbsp;SAVE </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col">
+      <div class="bg-light text-center">
+        <br/><br/>
+        <img [src]="photoUrl" class="rounded-circle" alt="avatar"
+             width="400" height="400">
+        <br/><br/>
       </div>
+      <br/>
+      <!--
+      <div class="form-group">
+      <input type="file" placeholder="Choose File" class="form-control"
+             (change)="onFileName($event)"/>
+      </div>
+      -->
     </div>
   </div>
-</form>
+
+  <app-json-viewer [content]="item" *ngIf="envMode === 'dev'"></app-json-viewer>
+
+</div>

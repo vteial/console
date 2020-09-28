@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {BaseComponent} from '../../@shared/base.component';
 import {ToastrService} from 'ngx-toastr';
 import {ClipboardService} from 'ngx-clipboard';
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-json-viewer',

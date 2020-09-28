@@ -16,7 +16,10 @@ import {Router} from "@angular/router";
 export class UserEditComponent extends BaseComponent implements OnInit {
 
   item: User;
+
   itemFg: FormGroup;
+
+  photoUrl: string;
 
   constructor(private api: ApiService,
               private toastr: ToastrService,
@@ -32,12 +35,18 @@ export class UserEditComponent extends BaseComponent implements OnInit {
   }
 
   refresh(): void {
-    this.item = this.storage.retrieve(User.KEY);
+    this.item = new User()
+    Object.assign(this.item, this.storage.retrieve(User.KEY))
+    this.photoUrl = this.item.photoUrl;
     this.itemFg = this.formBuilder.formGroup(this.item);
   }
 
   save(): void {
-    console.log(this.itemFg);
+    if (!this.itemFg.touched) {
+      this.toastr.info('There is no changes to save...');
+      return;
+    }
+    // console.log(this.itemFg);
     if (this.itemFg.invalid) {
       this.toastr.error('Please fix the error fields by providing valid values.');
       return;
@@ -50,26 +59,23 @@ export class UserEditComponent extends BaseComponent implements OnInit {
   }
 
   private create(): void {
-    // this.api.createUser(this.item).subscribe((data) => {
-    //   console.log(data);
-    //   this.router.navigateByUrl('user-list/' + this.item.id + '/view').finally(() => {
-    //   });
-    // }, (error) => {
-    //   this.item.id = undefined;
-    //   console.log(error);
-    //   this.toastr.error('Oops! Create failed...');
-    // });
+    this.api.createUser(this.item).then(data => {
+        this.storage.store(User.KEY, this.item);
+        this.router.navigateByUrl('user-list/' + this.item.id + '/view');
+    }).catch(error => {
+      this.toastr.error('Oops! Create failed...');
+      console.log(error);
+    });
   }
 
   private update(): void {
-    // this.api.updateUser(this.item).subscribe((data) => {
-    //   console.log(data);
-    //   this.router.navigateByUrl('user-list/' + this.item.id + '/view').finally(() => {
-    //   });
-    // }, (error) => {
-    //   console.log(error);
-    //   this.toastr.error('Oops! Update failed...');
-    // });
+    this.api.updateUser(this.item).then(data => {
+      this.storage.store(User.KEY, this.item);
+      this.router.navigateByUrl('user-list/' + this.item.id + '/view');
+    }).catch(error => {
+      this.toastr.error('Oops! Update failed...');
+      console.log(error);
+    });
   }
 
 }

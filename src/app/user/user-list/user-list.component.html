@@ -21,21 +21,27 @@
         <th scope="col">Name</th>
         <th scope="col">Mobile</th>
         <th scope="col">Status</th>
+        <!--
         <th scope="col" width="40">&nbsp;</th>
+        -->
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let item of items; index as i;">
+      <tr *ngFor="let item of items | async; index as i;">
         <td class="text-right">{{i+1}}</td>
-        <td>{{item.userId}}</td>
+        <td>
+          <button class="btn btn-link" (click)="view(item)">{{item.userId}}</button>
+        </td>
         <td>{{item.name}}</td>
         <td>{{item.mobile}}</td>
-        <td>{{item.status}}</td>
+        <td class="text-capitalize">{{item.status}}</td>
+        <!--
         <td class="text-center">
           <button class="btn btn-link btn-sm" (click)="view(item)">
             <i class="fas fa-eye"></i>
           </button>
         </td>
+        -->
       </tr>
       </tbody>
     </table>

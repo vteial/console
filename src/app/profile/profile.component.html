@@ -40,13 +40,13 @@
     <div class="col">
       <div class="bg-light text-center">
         <br/><br/>
-        <img [src]="item.avatarUrl" class="rounded-circle" alt="avatar"
+        <img [src]="item.photoUrl" class="rounded-circle" alt="avatar"
            width="400" height="400">
         <br/><br/>
       </div>
     </div>
   </div>
 
-  <app-json-viewer [content]="item"></app-json-viewer>
+  <app-json-viewer [content]="item" *ngIf="envMode === 'dev'"></app-json-viewer>
 
 </div>

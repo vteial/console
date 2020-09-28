@@ -1,9 +1,11 @@
-import {Injectable} from '@angular/core';
+import {Injectable, NgZone} from '@angular/core';
 import {Router} from "@angular/router";
 import {AngularFireAuth} from "@angular/fire/auth";
-import {BehaviorSubject, Observable, Subscription} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {auth} from "firebase";
 import {AppSession} from "../@model/app-session";
+import {User, UserStatus} from "../@model/user";
+import {ApiService} from "./api.service";
 
 @Injectable({
   providedIn: 'root'
@@ -17,16 +19,19 @@ export class AuthService {
 
   private fbUserDetail: firebase.User = null;
 
-  constructor(private _auth: AngularFireAuth, private _router: Router) {
+  constructor(private fbAuth: AngularFireAuth,
+              private api: ApiService,
+              private router: Router,
+              private ngZone: NgZone) {
     this.appSession$ = new BehaviorSubject<AppSession>(this.appSession);
 
-    this.fbAuthState = _auth.authState;
+    this.fbAuthState = fbAuth.authState;
     this.fbAuthState.subscribe(
       (user) => {
         if (user) {
           this.fbUserDetail = user;
-          // console.log(this.fbUserDetail);
           this.appSession = new AppSession(this.fbUserDetail);
+          this.syncUser();
         } else {
           this.fbUserDetail = null;
           this.appSession = null;
@@ -37,10 +42,58 @@ export class AuthService {
     );
   }
 
+  private syncUser(): void {
+    this.api.fetchUserById(this.appSession.appUser.id).subscribe(res => {
+      console.log(this.appSession.appUser);
+      const now = new Date(), model = this.appSession.appUser;
+      if (res.exists) {
+        Object.assign(model, res.data());
+        // model.status = UserStatus.ACTIVE;
+        // model.preUpdate(model.id, now);
+        // this.api.updateUser(model).catch(error => console.log(error));
+      } else {
+        model.status = UserStatus.ACTIVE;
+        model.preCreate(model.id, now);
+        this.api.createUser(model).catch(error => console.log(error));
+      }
+      console.log(model);
+    });
+  }
+
+  // createUser(auser: firebase.User) {
+  //   this.fbUserDetail = auser;
+  //   this.appSession = new AppSession(this.fbUserDetail);
+  //   this.appSession.appUser.id = auser.uid;
+  //   return this.api.createUser(this.appSession.appUser)
+  //   // const fbStoreRef = this.fbStore.doc(`${User.KEY}/${auser.uid}`);
+  //   // fbStoreRef.get().subscribe( res => {
+  //   //   if (!res.exists) {
+  //   //     fbStoreRef.set(Object.assign({}, this.appSession.appUser))
+  //   //       .catch(error => console.log(error));
+  //   //   }
+  //   // });
+  // }
+
+  // updateUser(model: User) {
+  //   return this.api.updateUser(model);
+  //   // const fbStoreRef = this.fbStore.doc(`${User.KEY}/${model.id}`);
+  //   // return fbStoreRef.update(Object.assign({}, model));
+  // }
+
+  signIn(user: User) {
+    return this.fbAuth.signInWithEmailAndPassword(user.userId, user.password);
+  }
+
   signInWithGoogle() {
-    return this._auth.signInWithPopup(
-      new auth.GoogleAuthProvider()
-    )
+    return this.fbAuth.signInWithPopup(new auth.GoogleAuthProvider())
+  }
+
+  signInWithFacebook() {
+    return this.fbAuth.signInWithPopup(new auth.FacebookAuthProvider())
+  }
+
+  signInWithTwitter() {
+    return this.fbAuth.signInWithPopup(new auth.TwitterAuthProvider())
   }
 
   isLoggedIn(): boolean {
@@ -48,6 +101,18 @@ export class AuthService {
   }
 
   signOut(): void {
-    this._auth.signOut().then((res) => this._router.navigate(['/index']));
+    this.fbAuth.signOut().then((res) => this.router.navigate(['/index']));
+  }
+
+  signUp(user: User) {
+    return this.fbAuth.createUserWithEmailAndPassword(user.email, user.password);
+  }
+
+  sendVerificationEmail() {
+    // TODO: send verification email
+  }
+
+  sendResetPasswordEmail(emaiId: string) {
+    return this.fbAuth.sendPasswordResetEmail(emaiId);
   }
 }

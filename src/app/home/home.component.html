@@ -1,6 +1,6 @@
 
-<h5>Welcome {{item?.name}}!</h5>
+<h5>Welcome {{item?.appUser?.name}}!</h5>
 
 <!--
-<app-json-viewer [content]="item"></app-json-viewer>
+<app-json-viewer [content]="item" *ngIf="envMode === 'dev'"></app-json-viewer>
 -->

@@ -5,6 +5,7 @@ import {ToastrService} from "ngx-toastr";
 import {User} from "../../@model/user";
 import {LocalStorageService} from "ngx-webstorage";
 import {Router} from "@angular/router";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-user-list',
@@ -13,7 +14,7 @@ import {Router} from "@angular/router";
 })
 export class UserListComponent extends BaseComponent implements OnInit {
 
-  items: Array<User>;
+  items: Observable<User[]>;
 
   constructor(private api: ApiService,
               private toastr: ToastrService,
@@ -28,15 +29,12 @@ export class UserListComponent extends BaseComponent implements OnInit {
   }
 
   refresh(): void {
-    // this.api.fetchUsers().subscribe((data) => {
-    //   this.items = data;
-    // });
+    this.items = this.api.fetchUsers();
   }
 
   view(item: User): void {
     this.storage.store(User.KEY, item);
-    this.router.navigateByUrl('user-list/' + item.id + '/view')
-      .finally(() => {});
+    this.router.navigateByUrl('user-list/' + item.id + '/view');
   }
 
 }

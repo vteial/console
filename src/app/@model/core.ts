@@ -1,5 +1,6 @@
 import {HttpParams} from "@angular/common/http";
-import {User} from "./user";
+import * as firebase from 'firebase';
+import Timestamp = firebase.firestore.Timestamp;
 
 export abstract class Model {
 
@@ -7,16 +8,41 @@ export abstract class Model {
 
   createdBy: string;
 
-  createdTime: Date;
+  createdTime: number;
+
+  // createdTimeX: Timestamp;
 
   updatedBy: string;
 
-  updatedTime: Date;
+  updatedTime: number;
+
+  // updatedTimeX: Timestamp;
 
   protected constructor() {
   }
 
-  abstract asHttpParams(): HttpParams;
+  preCreate(userIdName: string, time: Date): void {
+    this.createdBy = userIdName;
+    this.createdTime = time.getTime();
+    this.updatedBy = this.createdBy;
+    this.updatedTime = this.createdTime;
+    // this.createdTimeX = Timestamp.fromDate(time);
+    // this.updatedTimeX = this.createdTimeX;
+  }
+
+  preUpdate(userIdName: string, time: Date): void {
+    this.updatedBy = userIdName;
+    this.updatedTime = time.getTime();
+    // this.updatedTimeX = Timestamp.fromDate(time);
+  }
+
+  asHttpParams(): HttpParams {
+    let httpParams = new HttpParams();
+    if (this.id) {
+      httpParams = httpParams.set('id', '' + this.id);
+    }
+    return httpParams;
+  }
 
   asHttpParamsString(): string {
     let pstring = this.asHttpParams().toString();
@@ -25,16 +51,4 @@ export abstract class Model {
     }
     return pstring;
   }
-}
-
-
-export class UserDto {
-
-  userId: string;
-
-  password: string;
-
-  constructor() {
-  }
-
 }

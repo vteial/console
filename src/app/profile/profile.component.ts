@@ -5,6 +5,7 @@ import {AppSession} from "../@model/app-session";
 import {ApiService} from '../@shared/api.service';
 import {BaseComponent} from '../@shared/base.component';
 import {AuthService} from "../@shared/auth.service";
+import {User} from "../@model/user";
 
 @Component({
   selector: 'app-profile',
@@ -13,7 +14,7 @@ import {AuthService} from "../@shared/auth.service";
 })
 export class ProfileComponent extends BaseComponent implements OnInit {
 
-  item: AppSession;
+  item: User;
 
   constructor(private auth: AuthService,
               private toastr: ToastrService,
@@ -23,7 +24,7 @@ export class ProfileComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.item = this.auth.appSession;
+    this.item = this.auth.appSession.appUser;
   }
 
 }

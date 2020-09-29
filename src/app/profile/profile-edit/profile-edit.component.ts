@@ -7,6 +7,7 @@ import {ApiService} from "../../@shared/api.service";
 import {AuthService} from "../../@shared/auth.service";
 import {User} from '../../@model/user';
 import {BaseComponent} from '../../@shared/base.component';
+import {AngularFireStorage} from "@angular/fire/storage";
 
 @Component({
   selector: 'app-profile-edit',
@@ -25,7 +26,8 @@ export class ProfileEditComponent extends BaseComponent implements OnInit {
               private api: ApiService,
               private toastr: ToastrService,
               private router: Router,
-              private formBuilder: RxFormBuilder) {
+              private formBuilder: RxFormBuilder,
+              private afStorage: AngularFireStorage) {
     super();
     super.viewName = 'Edit Profile';
   }
@@ -34,6 +36,31 @@ export class ProfileEditComponent extends BaseComponent implements OnInit {
     this.item = this.auth.appSession.appUser;
     this.photoUrl = this.item.photoUrl;
     this.itemFg = this.formBuilder.formGroup(this.item);
+  }
+
+  onProfilePhotoSelect(event: any): void {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      let fpath = `/${this.item.id}/profilePhoto`;
+      fpath += file.name.substring(file.name.indexOf('.'));
+      console.log(`fpath : ${fpath}`);
+      this.afStorage.upload(fpath, file).then(res => {
+        console.log(res)
+        if (res) {
+          this.toastr.success('Profile photo uploaded successfully...');
+          this.updateProfilePhotoMetaData(res.ref);
+        }
+      });
+    }
+  }
+
+  private updateProfilePhotoMetaData(afStorageRef: firebase.storage.Reference): void {
+    afStorageRef.getDownloadURL().then(res => {
+      if (res) {
+        this.item.photoUrl = res;
+        this.api.updateUser(this.item);
+      }
+    });
   }
 
   save(): void {

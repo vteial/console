@@ -44,7 +44,7 @@ export class AuthService {
 
   private syncUser(): void {
     this.api.fetchUserById(this.appSession.appUser.id).subscribe(res => {
-      console.log(this.appSession.appUser);
+      // console.log(this.appSession.appUser);
       const now = new Date(), model = this.appSession.appUser;
       if (res.exists) {
         Object.assign(model, res.data());
@@ -59,26 +59,6 @@ export class AuthService {
       console.log(model);
     });
   }
-
-  // createUser(auser: firebase.User) {
-  //   this.fbUserDetail = auser;
-  //   this.appSession = new AppSession(this.fbUserDetail);
-  //   this.appSession.appUser.id = auser.uid;
-  //   return this.api.createUser(this.appSession.appUser)
-  //   // const fbStoreRef = this.fbStore.doc(`${User.KEY}/${auser.uid}`);
-  //   // fbStoreRef.get().subscribe( res => {
-  //   //   if (!res.exists) {
-  //   //     fbStoreRef.set(Object.assign({}, this.appSession.appUser))
-  //   //       .catch(error => console.log(error));
-  //   //   }
-  //   // });
-  // }
-
-  // updateUser(model: User) {
-  //   return this.api.updateUser(model);
-  //   // const fbStoreRef = this.fbStore.doc(`${User.KEY}/${model.id}`);
-  //   // return fbStoreRef.update(Object.assign({}, model));
-  // }
 
   signIn(user: User) {
     return this.fbAuth.signInWithEmailAndPassword(user.userId, user.password);

@@ -23,11 +23,13 @@ import {NotFoundComponent} from './not-found/not-found.component';
 import {JsonViewerComponent} from "./common/json-viewer/json-viewer.component";
 import {WorkbenchComponent} from "./workbench/workbench.component";
 import {IndexComponent} from './index/index.component';
+import {SignUpComponent} from './sign-up/sign-up.component';
+import {SignInComponent} from "./sign-in/sign-in.component";
+import {SignOutComponent} from "./sign-out/sign-out.component";
+import {ResetPasswordComponent} from './reset-password/reset-password.component';
 import {HomeComponent} from './home/home.component';
 import {ProfileComponent} from "./profile/profile.component";
 import {ProfileEditComponent} from "./profile/profile-edit/profile-edit.component";
-import {SignInComponent} from "./sign-in/sign-in.component";
-import {SignOutComponent} from "./sign-out/sign-out.component";
 import {UserListComponent} from './user/user-list/user-list.component';
 import {UserEditComponent} from './user/user-edit/user-edit.component';
 import {UserViewComponent} from './user/user-view/user-view.component';
@@ -39,8 +41,10 @@ import {UserViewComponent} from './user/user-view/user-view.component';
     JsonViewerComponent,
     WorkbenchComponent,
     IndexComponent,
+    SignUpComponent,
     SignInComponent,
     SignOutComponent,
+    ResetPasswordComponent,
     HomeComponent,
     ProfileComponent,
     ProfileEditComponent,

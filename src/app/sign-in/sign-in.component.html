@@ -15,10 +15,16 @@
                type="password" id="userPassword" name="password"
                [(ngModel)]="item.password" >
       </div>
-      <div class="text-right">
-        <button class="btn btn-primary" type="submit" value="Sign In">
-          <i class="fas fa-sign-in-alt mr-3"></i>Sign In
-        </button>
+      <div class="row">
+        <div class="col-md-6">
+          <span><a routerLink="/reset-password">Forget Password</a></span>
+          <br/><span><a routerLink="/sign-up">Sign Up</a></span>
+        </div>
+        <div class="col-md-6 text-right">
+          <button class="btn btn-primary" type="submit" value="Sign In">
+            <i class="fas fa-sign-in-alt mr-3"></i>Sign In
+          </button>
+        </div>
       </div>
     </form>
     <div class="row mt-5">

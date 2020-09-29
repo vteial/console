@@ -66,10 +66,6 @@ export class SignInComponent extends BaseComponent implements OnInit {
   }
 
   private handleSuccess(auser: firebase.User): void {
-    // this.auth.createUser(auser);
-    // this.auth.createUser(auser)
-    //   .catch(error => console.log(error))
-    //   .finally( () => this.router.navigate(['home']));
     this.router.navigate(['home']);
   }
 }

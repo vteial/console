@@ -1,1 +1,34 @@
-<p>sign-up works!</p>
+<div class="row">
+  <div class="col-md-4">
+    <br/><br/>
+    <div class="alert alert-danger" *ngIf="message">{{message}}</div>
+    <form (ngSubmit)="signUp()">
+      <div class="form-group">
+        <label for="userId"><strong>User Id</strong>&nbsp;&nbsp;<code>*</code></label>
+        <input class="form-control" placeholder="User Id"
+               type="email" id="userId" name="userId"
+               [(ngModel)]="item.userId">
+      </div>
+      <div class="form-group">
+        <label for="userPassword"><strong>Password</strong>&nbsp;&nbsp;<code>*</code></label>
+        <input class="form-control" placeholder="Password"
+               type="password" id="userPassword" name="password"
+               [(ngModel)]="item.password" >
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <span><a routerLink="/sign-in">Sign In</a></span>
+        </div>
+        <div class="col-md-6 text-right">
+          <button class="btn btn-primary" type="submit" value="Sign Up">
+            <i class="fas fa-registered mr-3"></i>Sign Up
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-md-1">&nbsp;</div>
+  <div class="col-md-7">
+    <img src="assets/images/login.png" width="600" height="600" alt="logo">
+  </div>
+</div>

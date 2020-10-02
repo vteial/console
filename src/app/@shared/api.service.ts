@@ -28,6 +28,10 @@ export class ApiService {
     return this.getUserCollection().doc(id).get();
   }
 
+  createOrUpdateUser(model: User) {
+    return this.getUserCollection().doc(model.id).set(Object.assign({}, model), {merge : true});
+  }
+
   createUser(model: User) {
     if(!model.id) {
       model.id = this.fbStore.createId();

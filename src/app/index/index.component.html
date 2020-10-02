@@ -1,3 +1,22 @@
+<!--
+<ng-container [ngSwitch]="action">
+  <ng-container *ngSwitchCase="'resetPassword'">
+    <app-confirm-password-reset></app-confirm-password-reset>
+  </ng-container>
+  <ng-container *ngSwitchCase="'verifyEmail'">
+    <app-confirm-email-address></app-confirm-email-address>
+  </ng-container>
+
+  <ng-container *ngSwitchDefault>
+    <div class="alert alert-danger">{{message}}</div>
+  </ng-container>
+</ng-container>
+-->
+<div *ngIf="message">
+  <div class="alert alert-danger">{{message}}</div>
+  <br/>
+</div>
+
 <div class="jumbotron">
   <h1 class="display-4">Welcome!</h1>
   <p class="lead">A smart way to manage your Backend</p>

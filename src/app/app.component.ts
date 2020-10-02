@@ -3,6 +3,8 @@ import {BaseComponent} from "./@shared/base.component";
 import {ReactiveFormConfig} from "@rxweb/reactive-form-validators";
 import {AuthService} from "./@shared/auth.service";
 import {AppSession} from "./@model/app-session";
+import {ToastrService} from "ngx-toastr";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -21,7 +23,10 @@ export class AppComponent implements AfterViewInit {
 
   appSession: AppSession;
 
-  constructor(private cdr: ChangeDetectorRef, private auth: AuthService) {
+  constructor(private cdr: ChangeDetectorRef,
+              private auth: AuthService,
+              private router: Router,
+              private toastr: ToastrService) {
     ReactiveFormConfig.set({
       validationMessage: {
         required: 'This field is required.',
@@ -31,8 +36,12 @@ export class AppComponent implements AfterViewInit {
         compare: 'This should match with another field'
       }
     });
-    this.auth.appSession$.subscribe(appSession => {
-      this.appSession = appSession;
+    this.auth.appSession$.subscribe(msg => {
+      this.appSession = this.auth.appSession;
+      if (msg) {
+        this.toastr.warning(msg);
+        this.router.navigate(['sign-in']);
+      }
     });
   }
 

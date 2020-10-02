@@ -12,8 +12,9 @@ import {ApiService} from "./api.service";
 })
 export class AuthService {
 
+  appSession$: BehaviorSubject<string>;
+
   appSession: AppSession = null;
-  appSession$: BehaviorSubject<AppSession>;
 
   private fbAuthState: Observable<firebase.User>;
 
@@ -23,38 +24,47 @@ export class AuthService {
               private api: ApiService,
               private router: Router,
               private ngZone: NgZone) {
-    this.appSession$ = new BehaviorSubject<AppSession>(this.appSession);
+    this.appSession$ = new BehaviorSubject<string>(null);
 
     this.fbAuthState = fbAuth.authState;
     this.fbAuthState.subscribe(
       (user) => {
+        let message = null;
         if (user) {
-          this.fbUserDetail = user;
-          this.appSession = new AppSession(this.fbUserDetail);
-          this.syncUser();
+          if (user.emailVerified) {
+            this.fbUserDetail = user;
+            this.appSession = new AppSession(this.fbUserDetail);
+            this.syncUser();
+          } else {
+            this.fbUserDetail = null;
+            this.appSession = null;
+            message = 'Your email account is not yet verified. Please verify it.'
+            this.signOut();
+          }
         } else {
           this.fbUserDetail = null;
           this.appSession = null;
         }
         console.log(this.appSession);
-        this.appSession$.next(this.appSession);
+        this.appSession$.next(message);
       }
     );
   }
 
   private syncUser(): void {
     this.api.fetchUserById(this.appSession.appUser.id).subscribe(res => {
-      // console.log(this.appSession.appUser);
+      console.log(`isExists(${this.appSession.appUser.id}) : ${res.exists}`);
       const now = new Date(), model = this.appSession.appUser;
       if (res.exists) {
         Object.assign(model, res.data());
-        // model.status = UserStatus.ACTIVE;
-        // model.preUpdate(model.id, now);
-        // this.api.updateUser(model).catch(error => console.log(error));
+        if (!model.photoUrl) {
+          model.photoUrl = 'assets/images/avatar_2x.png';
+          this.api.updateUser(model).catch(error => console.log(error));
+        }
       } else {
         model.status = UserStatus.ACTIVE;
         model.preCreate(model.id, now);
-        this.api.createUser(model).catch(error => console.log(error));
+        this.api.createOrUpdateUser(model).catch(error => console.log(error));
       }
       console.log(model);
     });
@@ -85,14 +95,84 @@ export class AuthService {
   }
 
   signUp(user: User) {
-    return this.fbAuth.createUserWithEmailAndPassword(user.email, user.password);
+    return this.fbAuth.createUserWithEmailAndPassword(user.userId, user.password);
   }
 
-  sendVerificationEmail() {
-    // TODO: send verification email
+  async sendVerificationEmail() {
+    const user = await this.fbAuth.currentUser;
+    const acs = {
+      url: `${window.location.origin}/sign-in`,
+      handleCodeInApp: true
+    };
+    return user.sendEmailVerification(acs);
+    // this.fbAuth.currentUser.then(res => {
+    //   res.sendEmailVerification();
+    // }).catch(error => {
+    //   console.log(error);
+    // });
   }
 
   sendResetPasswordEmail(emaiId: string) {
-    return this.fbAuth.sendPasswordResetEmail(emaiId);
+    const acs = {
+      url: `${window.location.origin}/reset-password`,
+      handleCodeInApp: true
+    };
+    return this.fbAuth.sendPasswordResetEmail(emaiId, acs);
+  }
+
+  applyActionCode(code: string) {
+    return this.fbAuth.applyActionCode(code);
+  }
+
+  getErrorMessage(errorCode: string): string {
+
+    let message: string;
+
+    switch (errorCode) {
+      case 'auth/argument-error':
+        message = 'Invalid login credentials.';
+        break;
+      case 'auth/invalid-email':
+        message = 'The email address is not a valid email address!';
+        break;
+      case 'auth/wrong-password':
+        message = 'Invalid login credentials.';
+        break;
+      case 'auth/network-request-failed':
+        message = 'Please check your internet connection';
+        break;
+      case 'auth/too-many-requests':
+        message =
+          'We have detected too many requests from your device. Take a break please!';
+        break;
+      case 'auth/user-disabled':
+        message =
+          'Your account has been disabled or deleted. Please contact the system administrator.';
+        break;
+      case 'auth/requires-recent-login':
+        message = 'Please login again and try again!';
+        break;
+      case 'auth/email-already-exists':
+        message = 'Email address is already in use by an existing user.';
+        break;
+      case 'auth/user-not-found':
+        message =
+          'We could not find user account associated with the email address or phone number.';
+        break;
+      case 'auth/phone-number-already-exists':
+        message = 'The phone number is already in use by an existing user.';
+        break;
+      case 'auth/invalid-phone-number':
+        message = 'The phone number is not a valid phone number!';
+        break;
+      case 'auth/cannot-delete-own-user-account':
+        message = 'You cannot delete your own user account.';
+        break;
+      default:
+        message = 'Oops! Something went wrong. Try again later.';
+        break;
+    }
+
+    return message;
   }
 }

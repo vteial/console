@@ -13,6 +13,7 @@ import {User} from "../@model/user";
 export class SignInComponent extends BaseComponent implements OnInit {
 
   message: string;
+
   item: User;
 
   constructor(private auth: AuthService,
@@ -37,22 +38,14 @@ export class SignInComponent extends BaseComponent implements OnInit {
     this.message = undefined;
     this.auth.signIn(this.item)
       .then(res => this.handleSuccess(res.user))
-      .catch(err => {
-        this.message = 'Sign In failed. Invalid email or password.';
-        this.toastr.error(this.message);
-        console.log(err)
-      });
+      .catch(err => this.handleFailure(err));
   }
 
   signInWithGoogle(): void {
     this.message = undefined;
     this.auth.signInWithGoogle()
       .then(res => this.handleSuccess(res.user))
-      .catch(err => {
-        this.message = 'Sign In failed. Invalid email or password.';
-        this.toastr.error(this.message);
-        console.log(err)
-      });
+      .catch(err => this.handleFailure(err));
   }
 
   signInWithFacebook(): void {
@@ -68,4 +61,11 @@ export class SignInComponent extends BaseComponent implements OnInit {
   private handleSuccess(auser: firebase.User): void {
     this.router.navigate(['home']);
   }
+
+  private handleFailure(err: any) {
+    this.message = this.auth.getErrorMessage(err.code);
+    this.toastr.error(this.message);
+    console.log(err)
+  }
 }
+

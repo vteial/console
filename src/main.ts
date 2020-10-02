@@ -16,8 +16,9 @@ if (window.location.hostname.indexOf('localhost') > -1
   || window.location.hostname.indexOf('dev') > -1) {
   environment.mode = 'dev';
 }
-// console.log(document.location.search);
-const usp = new URLSearchParams(document.location.search);
+// console.log(window.location);
+// console.log(document.location);
+const usp = new URLSearchParams(window.location.search);
 if (usp.has('mode')) {
   const mode = usp.get('mode');
   if (mode === 'prod') {

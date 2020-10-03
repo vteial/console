@@ -61,7 +61,7 @@ export class UserEditComponent extends BaseComponent implements OnInit {
   private create(): void {
     this.api.createUser(this.item).then(data => {
         this.storage.store(User.KEY, this.item);
-        this.router.navigateByUrl('user-list/' + this.item.id + '/view');
+        this.router.navigateByUrl('/users/' + this.item.id + '/view');
     }).catch(error => {
       this.toastr.error('Oops! Create failed...');
       console.log(error);
@@ -71,7 +71,7 @@ export class UserEditComponent extends BaseComponent implements OnInit {
   private update(): void {
     this.api.updateUser(this.item).then(data => {
       this.storage.store(User.KEY, this.item);
-      this.router.navigateByUrl('user-list/' + this.item.id + '/view');
+      this.router.navigateByUrl('/users/' + this.item.id + '/view');
     }).catch(error => {
       this.toastr.error('Oops! Update failed...');
       console.log(error);

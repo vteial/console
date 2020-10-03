@@ -14,6 +14,9 @@ import {UserListComponent} from "./user/user-list/user-list.component";
 import {UserViewComponent} from "./user/user-view/user-view.component";
 import {UserEditComponent} from "./user/user-edit/user-edit.component";
 import {AuthGuardService} from "./@shared/auth-guard.service";
+import {ProductListComponent} from "./product/product-list/product-list.component";
+import {ProductEditComponent} from "./product/product-edit/product-edit.component";
+import {ProductViewComponent} from "./product/product-view/product-view.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'index', pathMatch: 'full'},
@@ -28,9 +31,14 @@ const routes: Routes = [
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]},
   {path: 'profile-edit', component: ProfileEditComponent, canActivate: [AuthGuardService]},
 
-  {path: 'user-list', component: UserListComponent, canActivate: [AuthGuardService]},
-  {path: 'user-list/:id/view', component: UserViewComponent, canActivate: [AuthGuardService]},
-  {path: 'user-list/:id/edit', component: UserEditComponent, canActivate: [AuthGuardService]},
+  {path: 'users', component: UserListComponent, canActivate: [AuthGuardService]},
+  {path: 'users/:id/view', component: UserViewComponent, canActivate: [AuthGuardService]},
+  {path: 'users/:id/edit', component: UserEditComponent, canActivate: [AuthGuardService]},
+
+  {path: 'products', component: ProductListComponent, canActivate: [AuthGuardService]},
+  {path: 'products/:id/add', component: ProductEditComponent, canActivate: [AuthGuardService]},
+  {path: 'products/:id/view', component: ProductViewComponent, canActivate: [AuthGuardService]},
+  {path: 'products/:id/edit', component: ProductEditComponent, canActivate: [AuthGuardService]},
 
   {path: 'workbench', component: WorkbenchComponent},
   {path: '**', component: NotFoundComponent}

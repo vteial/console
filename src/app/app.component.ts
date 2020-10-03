@@ -1,17 +1,18 @@
-import {AfterViewInit, ChangeDetectorRef, Component} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {BaseComponent} from "./@shared/base.component";
 import {ReactiveFormConfig} from "@rxweb/reactive-form-validators";
 import {AuthService} from "./@shared/auth.service";
 import {AppSession} from "./@model/app-session";
 import {ToastrService} from "ngx-toastr";
-import {Router} from "@angular/router";
+import {NavigationEnd, Router} from "@angular/router";
+import {LocalStorageService} from "ngx-webstorage";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements OnInit, AfterViewInit {
 
   appTitle = 'Console';
 
@@ -26,7 +27,8 @@ export class AppComponent implements AfterViewInit {
   constructor(private cdr: ChangeDetectorRef,
               private auth: AuthService,
               private router: Router,
-              private toastr: ToastrService) {
+              private toastr: ToastrService,
+              private storage: LocalStorageService) {
     ReactiveFormConfig.set({
       validationMessage: {
         required: 'This field is required.',
@@ -41,7 +43,28 @@ export class AppComponent implements AfterViewInit {
       if (msg) {
         this.toastr.warning(msg);
         this.router.navigate(['sign-in']);
+      } else {
+        const currentPath = this.storage.retrieve('currentPath');
+        if (currentPath) {
+          this.router.navigateByUrl(currentPath);
+        }
       }
+    });
+  }
+
+  ngOnInit(): void {
+    this.router.events.subscribe(event => {
+      // if (event instanceof NavigationStart) {
+      // }
+      if (event instanceof NavigationEnd) {
+        if(this.appSession) {
+          // console.log(event);
+          this.storage.store('currentPath', event.url);
+        }
+      }
+      // if (event instanceof NavigationError) {
+      //   console.log(event.error);
+      // }
     });
   }
 

@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="col-md-2">
+    <a class="btn btn-outline-secondary mt-2" routerLink="{{backLink}}">
+      <i class="fas fa-arrow-circle-left fa-2x"></i>
+    </a>
+  </div>
+  <div class="col-md-8 text-center">
+    <h4 class="display-4 text-capitalize">{{item.name}}</h4>
+  </div>
+</div>
+
+<hr/>
+
+<form *ngIf="itemFg" [formGroup]="itemFg" (ngSubmit)="save()">
+  <div class="row">
+    <div class="col">
+      <div class="form-group">
+        <label>Code <code>*</code></label>
+        <input type="text" placeholder="code" class="form-control"
+               formControlName="code"/>
+        <small *ngFor="let em of itemFg.controls.code['errorMessages']"
+               class="form-text text-danger">{{em}}<br/>
+        </small>
+      </div>
+      <div class="form-group">
+        <label>Name <code>*</code></label>
+        <input type="text" placeholder="Name" class="form-control"
+               formControlName="name"/>
+        <small *ngFor="let em of itemFg.controls.name['errorMessages']"
+               class="form-text text-danger">{{em}}<br/>
+        </small>
+      </div>
+      <div class="form-group">
+        <label class="mb-2">Status <code>*</code></label><br/>
+        <div class="pretty p-default p-thick p-pulse mt-2">
+          <input type="radio" formControlName="status" value="active"/>
+          <div class="state p-success">
+            <i class="icon mdi mdi-check"></i>
+            <label class="text-success mr-3">Active</label>
+          </div>
+        </div>
+        <div class="pretty p-default p-thick p-pulse mt-2">
+          <input type="radio" formControlName="status" value="inactive"/>
+          <div class="state p-warning-o">
+            <label class="text-warning mr-3">In Active</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      &nbsp;
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col">
+      <button type="button" class="btn btn-danger float-left" (click)="remove()">
+        <i class="fas fa-trash"></i></button>
+      <button type="submit" class="btn btn-primary float-right">
+        <i class="fas fa-save mr-2"></i>SAVE&nbsp;</button>
+    </div>
+    <div class="col">
+      &nbsp;
+    </div>
+  </div>
+</form>
+
+<app-json-viewer [content]="item" *ngIf="envMode === 'dev'"></app-json-viewer>

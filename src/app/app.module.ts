@@ -33,6 +33,9 @@ import {ProfileEditComponent} from "./profile/profile-edit/profile-edit.componen
 import {UserListComponent} from './user/user-list/user-list.component';
 import {UserEditComponent} from './user/user-edit/user-edit.component';
 import {UserViewComponent} from './user/user-view/user-view.component';
+import { ProductListComponent } from './product/product-list/product-list.component';
+import { ProductEditComponent } from './product/product-edit/product-edit.component';
+import { ProductViewComponent } from './product/product-view/product-view.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +54,9 @@ import {UserViewComponent} from './user/user-view/user-view.component';
     UserListComponent,
     UserEditComponent,
     UserViewComponent,
+    ProductListComponent,
+    ProductEditComponent,
+    ProductViewComponent,
   ],
   imports: [
     BrowserModule,

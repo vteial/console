@@ -1,7 +1,6 @@
 import {prop, required} from '@rxweb/reactive-form-validators';
 import {Model} from './core';
 import * as firebase from 'firebase';
-import Timestamp = firebase.firestore.Timestamp;
 
 export enum UserStatus {
   DRAFT = 'draft',
@@ -9,6 +8,12 @@ export enum UserStatus {
   ACTIVE = 'active',
   INACTIVE = 'inactive',
   DELETED = 'deleted',
+}
+
+export enum UserRole {
+  CUSTOMER = 'customer',
+  EMPLOYEE = 'employee',
+  OWNER = 'owner',
 }
 
 export enum UserProvider {
@@ -65,13 +70,13 @@ export class User extends Model {
     super();
   }
 
-  preCreate(userIdName: string, time: Date): void {
-    super.preCreate(userIdName, time);
-  }
-
-  preUpdate(userIdName: string, time: Date): void {
-    super.preUpdate(userIdName, time);
-  }
+  // preCreate(userIdName: string, time: Date): void {
+  //   super.preCreate(userIdName, time);
+  // }
+  //
+  // preUpdate(userIdName: string, time: Date): void {
+  //   super.preUpdate(userIdName, time);
+  // }
 
   // compute(): void {
   //   if(this.status === undefined) {

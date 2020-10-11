@@ -1,0 +1,102 @@
+<div class="row">
+  <div class="col-md-9">
+    <div>
+      <span>Customer : <strong class="text-capitalize text-success">{{receipt.customerId}}</strong></span>
+      &nbsp;&nbsp;
+      <button class="btn btn-outline-primary btn-sm float-right"
+              type="button" (click)="changeCustomer()">Change Customer</button>
+    </div>
+    <br/>
+    <table class="table table-sm xtable-bordered table-hover">
+      <thead>
+      <tr>
+        <th scope="col" width="40" class="text-center">#</th>
+        <th scope="col">Name</th>
+        <th scope="col" class="text-right">Quantity</th>
+        <th scope="col" class="text-right">Price</th>
+        <th scope="col" class="text-right">Amount</th>
+        <th scope="col" width="50">&nbsp;</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of receipt.trans; index as i;">
+        <td class="text-right">{{i+1}}</td>
+        <td class="text-capitalize">{{item.product?.name}}</td>
+        <td class="text-right">{{item.unit | number}}</td>
+        <td class="text-right">{{item.rate | number:'1.2-2'}}</td>
+        <td class="text-right">{{item.amount | number:'1.2-2'}}</td>
+        <td class="text-center">
+          <button class="btn btn-outline-info btn-sm" (click)="edit(i)">
+            <i class="fas fa-edit"></i>
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4" class="text-right">
+          Total Amount
+        </td>
+        <td class="text-right">{{receipt.totalAmount | number: '1.2-2'}}</td>
+        <td>&nbsp;</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-3">
+    <form *ngIf="tranFg" [formGroup]="tranFg" (ngSubmit)="save()">
+      <div>
+        <button class="btn btn-outline-primary btn-sm float-right"
+                type="button" (click)="new()">New</button>
+      </div>
+      <br/>
+      <div class="form-group">
+        <label>Product <code>*</code></label>
+        <select class="form-control" formControlName="productId" (change)="onProduct()">
+          <option value="null">&lt;Select Product&gt;</option>
+          <option *ngFor="let o of products" [value]="o.id">{{o.name | ucwords}}</option>
+        </select>
+        <small *ngFor="let em of tranFg.controls.productId['errorMessages']"
+               class="form-text text-danger">{{em}}<br/>
+        </small>
+      </div>
+      <div class="form-group">
+        <label>Quantity <code>*</code></label>
+        <input type="text" placeholder="Quantity" class="form-control"
+               formControlName="unit" (change)="onUnit()"/>
+        <small *ngFor="let em of tranFg.controls.unit['errorMessages']"
+               class="form-text text-danger">{{em}}<br/>
+        </small>
+      </div>
+      <div class="form-group">
+        <label>Price <code>*</code></label>
+        <input type="text" placeholder="Price" class="form-control"
+               formControlName="rate" (change)="onRate()"/>
+        <small *ngFor="let em of tranFg.controls.rate['errorMessages']"
+               class="form-text text-danger">{{em}}<br/>
+        </small>
+      </div>
+      <div class="row mb-2">
+        <div class="col">
+          <span>Amount</span>
+        </div>
+        <div class="col text-right">
+          <span class="text-primary">{{tran.amount | number:'1.2-2'}}</span>
+        </div>
+      </div>
+      <div>
+        <button class="btn btn-danger btn-sm float-left" type="button"
+                *ngIf="tran.id" (click)="remove(tranIndex)">Delete</button>
+        <button class="btn btn-info btn-sm float-right" type="submit"
+                *ngIf="!tran.id" (click)="add()">Add</button>
+        <button class="btn btn-info btn-sm float-right" type="submit"
+                *ngIf="tran.id" (click)="update()">Update</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 offset-4">
+      <button type="button" class="btn btn-primary btn-block" (click)="checkOut()">Check Out</button>
+  </div>
+</div>
+
+<app-json-viewer [contentLeft]="receipt" [contentRight]="tran" *ngIf="envMode === 'dev'"></app-json-viewer>

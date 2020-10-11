@@ -1,49 +1,67 @@
-<div class="card" *ngIf="items">
-  <div class="card-header">
-    <div class="row">
-      <div class="col-md-10">
-        <strong>Total : <span class="text-info">{{items.length}}</span></strong>
-      </div>
-      <div class="col-md-2 text-right">
-        <button type="button" class="btn btn-secondary btn-sm pull-right"
-                (click)="refresh()">
-          <i class="fas fa-sync"></i>
-        </button>
+<div *ngIf="items">
+  <div class="row">
+    <div class="col-md-10">
+      <div class="form-group">
+        <label class="mb-2 mr-5">User Role <code>*</code></label><br/>
+        <div class="pretty p-default p-round p-pulse mt-2">
+          <input type="radio" name="userRole" value="owner"
+                 [(ngModel)]="userRole" (change)="onUserRole()"/>
+          <div class="state p-warning-o">
+            <i class="icon mdi mdi-check"></i>
+            <label class="text-info mr-3">OWNER</label>
+          </div>
+        </div>
+        <div class="pretty p-default p-round p-pulse mt-2">
+          <input type="radio" name="userRole" value="employee"
+                 [(ngModel)]="userRole" (change)="onUserRole()"/>
+          <div class="state p-warning-o">
+            <label class="text-info mr-3">EMPLOYEE</label>
+          </div>
+        </div>
+        <div class="pretty p-default p-round p-pulse mt-2">
+          <input type="radio" name="userRole" value="customer"
+                 [(ngModel)]="userRole" (change)="onUserRole()"/>
+          <div class="state p-warning-o">
+            <label class="text-info mr-3">CUSTOMER</label>
+          </div>
+        </div>
       </div>
     </div>
+    <div class="col-md-2 text-right">
+      <br/>
+      <button type="button" class="btn btn-secondary btn-sm pull-right"
+              (click)="refresh()">
+        <i class="fas fa-sync"></i>
+      </button>
+    </div>
   </div>
-  <div class="card-body">
-    <table class="table table-sm table-bordered table-hover">
-      <thead>
-      <tr>
-        <th scope="col" width="40">#</th>
-        <th scope="col">User Id</th>
-        <th scope="col">Name</th>
-        <th scope="col">Mobile</th>
-        <th scope="col">Status</th>
-        <!--
-        <th scope="col" width="40">&nbsp;</th>
-        -->
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let item of items | async; index as i;">
-        <td class="text-right">{{i+1}}</td>
-        <td>
-          <button class="btn btn-link" (click)="view(item)">{{item.userId}}</button>
-        </td>
-        <td>{{item.name}}</td>
-        <td>{{item.mobile}}</td>
-        <td class="text-capitalize">{{item.status}}</td>
-        <!--
-        <td class="text-center">
-          <button class="btn btn-link btn-sm" (click)="view(item)">
-            <i class="fas fa-eye"></i>
-          </button>
-        </td>
-        -->
-      </tr>
-      </tbody>
-    </table>
-  </div>
+  <br/>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th scope="col" width="40">#</th>
+      <th scope="col">User Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Mobile</th>
+      <th scope="col">Role</th>
+      <th scope="col">Status</th>
+      <th scope="col" width="40">&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of items | async; index as i;">
+      <td class="text-right">{{i+1}}</td>
+      <td>{{item.userId}}</td>
+      <td class="text-capitalize">{{item.name}}</td>
+      <td>{{item.mobile}}</td>
+      <td class="text-uppercase">{{item.roleId}}</td>
+      <td class="text-uppercase">{{item.status}}</td>
+      <td class="text-center">
+        <button class="btn btn-outline-info btn-sm" (click)="view(item)">
+          <i class="fas fa-eye"></i>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 </div>

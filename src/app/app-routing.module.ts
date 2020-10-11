@@ -17,6 +17,8 @@ import {AuthGuardService} from "./@shared/auth-guard.service";
 import {ProductListComponent} from "./product/product-list/product-list.component";
 import {ProductEditComponent} from "./product/product-edit/product-edit.component";
 import {ProductViewComponent} from "./product/product-view/product-view.component";
+import {CartComponent} from "./cart/cart.component";
+import {SettingsComponent} from "./settings/settings.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'index', pathMatch: 'full'},
@@ -28,6 +30,7 @@ const routes: Routes = [
   {path: 'sign-out', component: SignOutComponent},
 
   {path: 'home', component: HomeComponent, canActivate: [AuthGuardService]},
+  {path: 'settings', component: SettingsComponent},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]},
   {path: 'profile-edit', component: ProfileEditComponent, canActivate: [AuthGuardService]},
 
@@ -39,6 +42,8 @@ const routes: Routes = [
   {path: 'products/:id/add', component: ProductEditComponent, canActivate: [AuthGuardService]},
   {path: 'products/:id/view', component: ProductViewComponent, canActivate: [AuthGuardService]},
   {path: 'products/:id/edit', component: ProductEditComponent, canActivate: [AuthGuardService]},
+
+  {path: 'cart', component: CartComponent},
 
   {path: 'workbench', component: WorkbenchComponent},
   {path: '**', component: NotFoundComponent}

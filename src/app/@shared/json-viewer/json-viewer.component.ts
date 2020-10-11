@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {BaseComponent} from '../../@shared/base.component';
+import {BaseComponent} from '../base.component';
 import {ToastrService} from 'ngx-toastr';
 import {ClipboardService} from 'ngx-clipboard';
 import {environment} from "../../../environments/environment";
@@ -16,6 +16,12 @@ export class JsonViewerComponent extends BaseComponent implements OnInit {
 
   @Input()
   content: any;
+
+  @Input()
+  contentLeft: any;
+
+  @Input()
+  contentRight: any;
 
   @Input()
   pname: string;

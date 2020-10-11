@@ -24,13 +24,13 @@ export class ProductEditComponent extends BaseComponent implements OnInit {
 
   itemFg: FormGroup;
 
-  constructor(private api: ApiService,
+  constructor(private auth: AuthService,
+              private api: ApiService,
               private toastr: ToastrService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private storage: LocalStorageService,
-              private formBuilder: RxFormBuilder,
-              private auth: AuthService) {
+              private formBuilder: RxFormBuilder) {
     super();
     this.viewName = 'Add / Edit Product';
     this.backLink = '/products';

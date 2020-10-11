@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {User} from "../@model/user";
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/firestore";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
+import {User} from "../@model/user";
 import {Product} from "../@model/product";
 
 @Injectable({
@@ -51,6 +51,21 @@ export class ApiService {
   }
 
   // products
+
+  fetchProductsMock(): Observable<Product[]> {
+    const models = new Array<Product>();
+    let model = new Product();
+    model.id = 'usd';
+    model.code = 'usd';
+    model.name = 'united states dollar';
+    models.push(model);
+    model = new Product();
+    model.id = 'sgd';
+    model.code = 'sgd';
+    model.name = 'singapore dollar';
+    models.push(model);
+    return of(models);
+  }
 
   private getProductCollection(): AngularFirestoreCollection<Product> {
     if (!this.productCol) {

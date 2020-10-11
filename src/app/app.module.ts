@@ -6,6 +6,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {ClipboardModule} from 'ngx-clipboard';
 import {NgxWebstorageModule} from 'ngx-webstorage';
+import {NgPipesModule} from "ngx-pipes";
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
 import {ToastrModule} from 'ngx-toastr';
 import {NgxPrettyCheckboxModule} from 'ngx-pretty-checkbox';
@@ -20,7 +21,7 @@ import {environment} from "../environments/environment";
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {NotFoundComponent} from './not-found/not-found.component';
-import {JsonViewerComponent} from "./common/json-viewer/json-viewer.component";
+import {JsonViewerComponent} from "./@shared/json-viewer/json-viewer.component";
 import {WorkbenchComponent} from "./workbench/workbench.component";
 import {IndexComponent} from './index/index.component';
 import {SignUpComponent} from './sign-up/sign-up.component';
@@ -33,9 +34,11 @@ import {ProfileEditComponent} from "./profile/profile-edit/profile-edit.componen
 import {UserListComponent} from './user/user-list/user-list.component';
 import {UserEditComponent} from './user/user-edit/user-edit.component';
 import {UserViewComponent} from './user/user-view/user-view.component';
-import { ProductListComponent } from './product/product-list/product-list.component';
-import { ProductEditComponent } from './product/product-edit/product-edit.component';
-import { ProductViewComponent } from './product/product-view/product-view.component';
+import {ProductListComponent} from './product/product-list/product-list.component';
+import {ProductEditComponent} from './product/product-edit/product-edit.component';
+import {ProductViewComponent} from './product/product-view/product-view.component';
+import {CartComponent} from './cart/cart.component';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +60,8 @@ import { ProductViewComponent } from './product/product-view/product-view.compon
     ProductListComponent,
     ProductEditComponent,
     ProductViewComponent,
+    CartComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +72,7 @@ import { ProductViewComponent } from './product/product-view/product-view.compon
     ReactiveFormsModule,
     RxReactiveFormsModule,
     ClipboardModule,
+    NgPipesModule,
     NgxWebstorageModule.forRoot(),
     SweetAlert2Module.forRoot(),
     NgxPrettyCheckboxModule,

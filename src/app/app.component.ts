@@ -60,6 +60,10 @@ export class AppComponent implements OnInit, AfterViewInit {
         if(this.appSession) {
           // console.log(event);
           this.storage.store('currentPath', event.url);
+        } else {
+          if (event.url === '/cart') {
+            this.storage.store('currentPath', event.url);
+          }
         }
       }
       // if (event instanceof NavigationError) {

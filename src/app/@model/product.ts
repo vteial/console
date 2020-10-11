@@ -1,7 +1,7 @@
 import {Model} from "./core";
 import {required} from "@rxweb/reactive-form-validators";
 
-export enum ProductType {
+export enum ProductCategory {
   PRODUCT = 'product',
 }
 
@@ -18,7 +18,7 @@ export class Product extends Model {
   static KEY = 'products';
 
   @required()
-  type: string;
+  category: string;
 
   @required()
   code: string;
@@ -35,6 +35,6 @@ export class Product extends Model {
   constructor() {
     super();
     this.status = ProductStatus.ACTIVE;
-    this.type = ProductType.PRODUCT;
+    this.category = ProductCategory.PRODUCT;
   }
 }

@@ -36,19 +36,9 @@ export abstract class Model {
     // this.updatedTimeX = Timestamp.fromDate(time);
   }
 
-  asHttpParams(): HttpParams {
-    let httpParams = new HttpParams();
-    if (this.id) {
-      httpParams = httpParams.set('id', '' + this.id);
-    }
-    return httpParams;
+  importFromMap(src: any): void {
   }
 
-  asHttpParamsString(): string {
-    let pstring = this.asHttpParams().toString();
-    if (pstring && pstring.length > 0) {
-      pstring = '?' + pstring;
-    }
-    return pstring;
+  exportToMap(): any {
   }
 }

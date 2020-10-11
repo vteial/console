@@ -59,6 +59,7 @@ export class AuthService {
         Object.assign(model, res.data());
         if (!model.photoUrl) {
           model.photoUrl = 'assets/images/avatar_2x.png';
+          model.preUpdate(model.id, now);
           this.api.updateUser(model).catch(error => console.log(error));
         }
       } else {
